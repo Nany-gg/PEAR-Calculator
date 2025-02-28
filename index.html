@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Web</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #003366;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 30px;
+            font-weight: bold;
+            color: #f1c40f;
+        }
+
+        .display {
+            width: 300px;
+            padding: 20px;
+            font-size: 30px;
+            background-color: #222;
+            color: #fff;
+            text-align: right;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .calculadora {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+            width: 300px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #333;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            padding: 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #f1c40f;
+            box-shadow: 0 0 10px 2px #9b59b6;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 10px;
+            color: #fff;
+            font-size: 14px;
+            text-align: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Calculadora Web</h1>
+
+    <div class="display" id="display">0</div>
+
+    <div class="calculadora">
+        <button onclick="appendToDisplay('7')">7</button>
+        <button onclick="appendToDisplay('8')">8</button>
+        <button onclick="appendToDisplay('9')">9</button>
+        <button onclick="appendToDisplay('+')">+</button>
+        <button onclick="appendToDisplay('4')">4</button>
+        <button onclick="appendToDisplay('5')">5</button>
+        <button onclick="appendToDisplay('6')">6</button>
+        <button onclick="appendToDisplay('-')">-</button>
+        <button onclick="appendToDisplay('1')">1</button>
+        <button onclick="appendToDisplay('2')">2</button>
+        <button onclick="appendToDisplay('3')">3</button>
+        <button onclick="appendToDisplay('×')">×</button>
+        <button onclick="appendToDisplay('0')">0</button>
+        <button onclick="appendToDisplay('.')">.</button>
+        <button onclick="appendToDisplay('^')">xⁿ</button>
+        <button onclick="appendToDisplay('÷')">÷</button>
+        <button onclick="applySquareRoot()">√</button>
+        <button onclick="clearDisplay()">C</button>
+        <button onclick="calculateResult()">=</button>
+    </div>
+
+    <footer>
+        <p>©2025, Néstor</p>
+    </footer>
+
+    <script>
+        let display = document.getElementById("display");
+
+        function appendToDisplay(value) {
+            if (display.innerText === "0") {
+                display.innerText = value;
+            } else {
+                display.innerText += value;
+            }
+        }
+
+        function clearDisplay() {
+            display.innerText = "0";
+        }
+
+        function applySquareRoot() {
+            let expression = display.innerText;
+            let number = parseFloat(expression);
+
+            if (!isNaN(number)) {
+                display.innerText = Math.sqrt(number);
+            } else {
+                display.innerText = "Error";
+            }
+        }
+
+        function calculateResult() {
+            try {
+                let expression = display.innerText
+                    .replace(/×/g, '*')
+                    .replace(/÷/g, '/')
+                    .replace(/\^/g, '**');
+
+                // **Corrección: Usamos Function en lugar de eval()**
+                let result = new Function('return ' + expression)();
+                display.innerText = result;
+            } catch (e) {
+                display.innerText = "Error";
+            }
+        }
+    </script>
+</body>
+          </html>
+          
